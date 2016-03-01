@@ -1,40 +1,49 @@
 package com.sabahtalateh;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
 
     public static Set<List<Integer>> combinations;
 
-    public static void main(String[] args) {
-        int k = 5;
-        int n = 3;
+    public static void main(String[] args) throws IOException {
 
-        combinations = new HashSet<>();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String s = br.readLine();
 
-        int[] p = new int[n];
-        int[] b = setBorders(k, n);
-        setPointers(p, 0, 0);
+        s.split("\\s+");
 
-        findCombinations(p, b, p.length - 1);
 
-        System.out.println(combinations);
-        System.out.println(combinations.size());
+        int n = Integer.parseInt(s.split("\\s+")[0]);
+        int k = Integer.parseInt(s.split("\\s+")[1]);
 
-//        do {
-//            System.out.println(Arrays.toString(p));
-//
-//        } while (p[0] <= b[0]);
+        if (k == 0 || n == 0) {
 
-//        System.out.println(Arrays.toString(p));
-//        System.out.println(Arrays.toString(b));
+        } else {
+
+            combinations = new TreeSet<>(
+                    Comparator.comparing(List::hashCode)
+            );
+
+            int[] p = new int[n];
+            int[] b = setBorders(k, n);
+            setPointers(p, 0, 0);
+
+            findCombinations(p, b, p.length - 1);
+
+            for (List<Integer> list : combinations) {
+                for (Integer el : list) {
+                    System.out.print(el + " ");
+                }
+                System.out.println();
+            }
+        }
     }
 
     private static void findCombinations(int[] p, int[] borders, int currentPointer) {
-//        System.out.println(currentPointer);
-//        System.out.println(p[currentPointer]);
-
-//        System.out.println(Arrays.toString(p));
 
         List<Integer> comb = new ArrayList<>();
         for (int el : p) {
